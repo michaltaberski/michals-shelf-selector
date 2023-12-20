@@ -1,2 +1,1 @@
-export * from "./ImageAreaSelector";
-export * from "./types";
+export type Point = { x: number; y: number };

@@ -11,7 +11,7 @@ const App = () => {
       </LayoutContainer>
       <LayoutContainer>
         <LayoutBox className="w-3/4 overflow-scroll">
-          <ImageAreaSelector src="/images/shelf-1.avif" />
+          <ImageAreaSelector imageUrl="/images/shelf-1.avif" />
         </LayoutBox>
         <LayoutBox className="w-1/4 min-w-64"></LayoutBox>
       </LayoutContainer>
