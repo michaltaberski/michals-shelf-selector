@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRichState } from "../../utils";
-import { Point } from "./types";
+import { Point, Rectangle } from "./types";
 import { substractOffset } from "./utils";
 import clamp from "lodash/clamp";
 
@@ -8,12 +8,10 @@ export type ImageAreaSelectorProps = {
   imageUrl: string;
 };
 
-export type MouseDrawState = {
+export type MouseDrawState = Rectangle & {
   isDrawing: boolean;
   // offset is the position of the top left corner of the overlay relative to the viewport
   offsetPoint: Point;
-  startPoint: Point;
-  endPoint: Point;
   // the max [x, y] values of the canvas, or [width, height] (its the same)
   canvasSize: Point;
 };
