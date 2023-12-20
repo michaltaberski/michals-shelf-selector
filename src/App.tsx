@@ -1,5 +1,9 @@
 const App = () => {
-  return <>Init Michal's shelf selector</>;
+  return (
+    <>
+      <h1 className="text-5xl">Michal's shelf selector</h1>
+    </>
+  );
 };
 
 export default App;
