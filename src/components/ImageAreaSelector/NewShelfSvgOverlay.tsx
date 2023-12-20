@@ -30,16 +30,14 @@ const caulculateDerivedState = (mouseDrawState: MouseDrawState) => {
 export const NewShelfSvgOverlay = ({
   mouseDrawState,
 }: NewShelfSvgOverlayProps) => {
+  // useMemo to avoid recalculating derived state on every render
   const state = useMemo(
     () => caulculateDerivedState(mouseDrawState),
     [mouseDrawState]
   );
 
-  console.log(state.points.map((p) => p.join(",")).join(" "));
-
   return (
     <svg
-      className="border-2 border-red-500"
       width={state.canvasWidth}
       height={state.canvasHeight}
       xmlns="http://www.w3.org/2000/svg"

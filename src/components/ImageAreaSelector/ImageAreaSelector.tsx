@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useMouseDraw } from "./useMouseDraw";
 import { NewShelfSvgOverlay } from "./NewShelfSvgOverlay";
 
@@ -12,10 +12,6 @@ const Overlay = () => {
     overlayRef,
     (result) => {}
   );
-
-  useEffect(() => {
-    console.log(JSON.stringify(mouseDrawState));
-  }, [mouseDrawState]);
 
   return (
     <div
