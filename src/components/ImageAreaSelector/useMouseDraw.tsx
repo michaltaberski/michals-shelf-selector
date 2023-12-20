@@ -40,6 +40,10 @@ export const useMouseDraw = (
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      // Prevent default behavior (selection of text, or page scrolling)
+      // so we don't get ugly UX
+      e.preventDefault();
+
       // return early if not drawing
       if (!state.isDrawing) return;
 
@@ -71,6 +75,7 @@ export const useMouseDraw = (
       resetState({
         isDrawing: true,
         startPoint,
+        endPoint: startPoint,
         offsetPoint,
         canvasSize: [oferlayRect.width, oferlayRect.height],
       });

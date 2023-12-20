@@ -7,7 +7,7 @@ export type NewShelfSvgOverlayProps = {
 
 const caulculateDerivedState = (mouseDrawState: MouseDrawState) => {
   const canvasWidth = mouseDrawState.canvasSize[0];
-  const canvasHeight = mouseDrawState.startPoint[1];
+  const canvasHeight = mouseDrawState.canvasSize[1];
 
   const topLeftPoint = mouseDrawState.startPoint;
   const topRightPoint = [
@@ -35,10 +35,11 @@ export const NewShelfSvgOverlay = ({
     [mouseDrawState]
   );
 
-  console.log(JSON.stringify(state));
+  console.log(state.points.map((p) => p.join(",")).join(" "));
 
   return (
     <svg
+      className="border-2 border-red-500"
       width={state.canvasWidth}
       height={state.canvasHeight}
       xmlns="http://www.w3.org/2000/svg"
