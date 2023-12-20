@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useRichState } from "../../utils";
 import { Point } from "./types";
+import { substractOffset } from "./utils";
 
 export type ImageAreaSelectorProps = {
   imageUrl: string;
 };
 
-type MouseDrawState = {
+export type MouseDrawState = {
   isDrawing: boolean;
   // offset is the position of the top left corner of the overlay relative to the viewport
   offsetPoint: Point;
@@ -24,17 +25,18 @@ const defaultState: MouseDrawState = {
   canvasSize: [0, 0],
 };
 
-export const useMouseDraw = (overlayRef: React.RefObject<HTMLDivElement>) => {
+export const useMouseDraw = (
+  overlayRef: React.RefObject<HTMLDivElement>,
+  onDrawEnd: (state: MouseDrawState) => void
+) => {
   const { state, updateState, resetState } =
     useRichState<MouseDrawState>(defaultState);
 
   useEffect(() => {
     // Event handlers
-    const handleMouseUp = (e: MouseEvent) => {
-      updateState({
-        isDrawing: false,
-        endPoint: [e.clientX, e.clientY],
-      });
+    const handleMouseUp = () => {
+      onDrawEnd(state);
+      resetState();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -42,7 +44,7 @@ export const useMouseDraw = (overlayRef: React.RefObject<HTMLDivElement>) => {
       if (!state.isDrawing) return;
 
       updateState({
-        endPoint: [e.clientX, e.clientY],
+        endPoint: substractOffset([e.clientX, e.clientY], state.offsetPoint),
       });
     };
 
@@ -62,14 +64,17 @@ export const useMouseDraw = (overlayRef: React.RefObject<HTMLDivElement>) => {
       // return early if overlayRef is not set
       if (!overlayRef.current) return;
       const oferlayRect = overlayRef.current.getBoundingClientRect();
+      const offsetPoint: Point = [oferlayRect.x, oferlayRect.y];
+      const startPoint = substractOffset([e.clientX, e.clientY], offsetPoint);
+
       // starting new selection, so reset state to start fresh
       resetState({
         isDrawing: true,
-        startPoint: [e.clientX, e.clientY],
-        offsetPoint: [oferlayRect.x, oferlayRect.y],
+        startPoint,
+        offsetPoint,
         canvasSize: [oferlayRect.width, oferlayRect.height],
       });
     },
-    state,
+    mouseDrawState: state,
   };
 };

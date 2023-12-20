@@ -13,7 +13,7 @@ export const useRichState = <T extends object>(initialState: T) => {
     setState((prevState) => ({ ...prevState, ...newState }));
   };
 
-  const resetState = (newState: Partial<T>) =>
+  const resetState = (newState: Partial<T> = {}) =>
     setState({ ...initialState, ...newState });
 
   return { state, updateState, resetState };

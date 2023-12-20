@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useMouseDraw } from "./useMouseDraw";
+import { NewShelfSvgOverlay } from "./NewShelfSvgOverlay";
 
 export type ImageAreaSelectorProps = {
   imageUrl: string;
@@ -7,18 +8,23 @@ export type ImageAreaSelectorProps = {
 
 const Overlay = () => {
   const overlayRef = React.useRef<HTMLDivElement>(null);
-  const { onMouseDown, state } = useMouseDraw(overlayRef);
+  const { onMouseDown, mouseDrawState } = useMouseDraw(
+    overlayRef,
+    (result) => {}
+  );
 
   useEffect(() => {
-    console.log(state);
-  }, [state]);
+    console.log(JSON.stringify(mouseDrawState));
+  }, [mouseDrawState]);
 
   return (
     <div
       ref={overlayRef}
       onMouseDown={onMouseDown}
       className="absolute top-0 left-0 w-full h-full"
-    ></div>
+    >
+      <NewShelfSvgOverlay mouseDrawState={mouseDrawState} />
+    </div>
   );
 };
 
