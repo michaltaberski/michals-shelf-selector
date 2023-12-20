@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import { MouseDrawState, useMouseDraw } from "./useMouseDraw";
 import { PolygonsOverlay } from "./PolygonsOverlay";
 import { Polygon } from "../../types";
-import { MIN_SHELF_SIZE } from "../../const";
+import { MIN_SHELF_SIZE, SELECTION_COLOR } from "../../const";
 import { rectangleToPolygon } from "../../utils";
 
 export type DrawNewShelfOverlayProps = {
@@ -43,6 +43,7 @@ export const DrawNewShelfOverlay = ({
     >
       <PolygonsOverlay
         canvasSize={mouseDrawState.canvasSize}
+        polygonColor={SELECTION_COLOR}
         polygons={[polygon]}
       />
     </div>

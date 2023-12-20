@@ -1,4 +1,4 @@
-import { Polygon } from ".";
+import { Polygon } from "../../types";
 import { DrawNewShelfOverlay } from "./DrawNewShelfOverlay";
 import { DrawShelfsOverlay } from "./DrawShelfsOverlay";
 
