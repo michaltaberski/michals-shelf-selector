@@ -1,1 +1,2 @@
-export { ImageAreaSelector } from "./ImageAreaSelector";
+export * from "./ImageAreaSelector";
+export * from "./types";

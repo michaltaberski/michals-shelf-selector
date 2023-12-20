@@ -12,13 +12,16 @@ type MouseDrawState = {
   offsetPoint: Point;
   startPoint: Point;
   endPoint: Point;
+  // the max [x, y] values of the canvas, or [width, height] (its the same)
+  canvasSize: Point;
 };
 
 const defaultState: MouseDrawState = {
   isDrawing: false,
-  offsetPoint: { x: 0, y: 0 },
-  startPoint: { x: 0, y: 0 },
-  endPoint: { x: 0, y: 0 },
+  offsetPoint: [0, 0],
+  startPoint: [0, 0],
+  endPoint: [0, 0],
+  canvasSize: [0, 0],
 };
 
 export const useMouseDraw = (overlayRef: React.RefObject<HTMLDivElement>) => {
@@ -30,7 +33,7 @@ export const useMouseDraw = (overlayRef: React.RefObject<HTMLDivElement>) => {
     const handleMouseUp = (e: MouseEvent) => {
       updateState({
         isDrawing: false,
-        endPoint: { x: e.clientX, y: e.clientY },
+        endPoint: [e.clientX, e.clientY],
       });
     };
 
@@ -39,7 +42,7 @@ export const useMouseDraw = (overlayRef: React.RefObject<HTMLDivElement>) => {
       if (!state.isDrawing) return;
 
       updateState({
-        endPoint: { x: e.clientX, y: e.clientY },
+        endPoint: [e.clientX, e.clientY],
       });
     };
 
@@ -62,8 +65,9 @@ export const useMouseDraw = (overlayRef: React.RefObject<HTMLDivElement>) => {
       // starting new selection, so reset state to start fresh
       resetState({
         isDrawing: true,
-        startPoint: { x: e.clientX, y: e.clientY },
-        offsetPoint: { x: oferlayRect.x, y: oferlayRect.y },
+        startPoint: [e.clientX, e.clientY],
+        offsetPoint: [oferlayRect.x, oferlayRect.y],
+        canvasSize: [oferlayRect.width, oferlayRect.height],
       });
     },
     state,
