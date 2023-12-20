@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useRichState } from "../../utils";
 import { Point } from "./types";
 import { substractOffset } from "./utils";
+import clamp from "lodash/clamp";
 
 export type ImageAreaSelectorProps = {
   imageUrl: string;
@@ -47,8 +48,16 @@ export const useMouseDraw = (
       // return early if not drawing
       if (!state.isDrawing) return;
 
+      const endPointBeforeValidation = substractOffset(
+        [e.clientX, e.clientY],
+        state.offsetPoint
+      );
       updateState({
-        endPoint: substractOffset([e.clientX, e.clientY], state.offsetPoint),
+        endPoint: [
+          // clamp to canvas size (so the end point is within the canvas bounds)
+          clamp(endPointBeforeValidation[0], 0, state.canvasSize[0]),
+          clamp(endPointBeforeValidation[1], 0, state.canvasSize[1]),
+        ],
       });
     };
 

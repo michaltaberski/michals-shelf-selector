@@ -6,24 +6,19 @@ export type NewShelfSvgOverlayProps = {
 };
 
 const caulculateDerivedState = (mouseDrawState: MouseDrawState) => {
-  const canvasWidth = mouseDrawState.canvasSize[0];
-  const canvasHeight = mouseDrawState.canvasSize[1];
-
-  const topLeftPoint = mouseDrawState.startPoint;
-  const topRightPoint = [
-    mouseDrawState.endPoint[0],
-    mouseDrawState.startPoint[1],
-  ];
-  const bottomRightPoint = mouseDrawState.endPoint;
-  const bottomLeftPoint = [
-    mouseDrawState.startPoint[0],
-    mouseDrawState.endPoint[1],
-  ];
-
   return {
-    canvasHeight,
-    canvasWidth,
-    points: [topLeftPoint, topRightPoint, bottomRightPoint, bottomLeftPoint],
+    canvasWidth: mouseDrawState.canvasSize[0],
+    canvasHeight: mouseDrawState.canvasSize[1],
+    points: [
+      // top left
+      mouseDrawState.startPoint,
+      // top right
+      [mouseDrawState.endPoint[0], mouseDrawState.startPoint[1]],
+      // bottom right
+      mouseDrawState.endPoint,
+      // bottom left
+      [mouseDrawState.startPoint[0], mouseDrawState.endPoint[1]],
+    ],
   };
 };
 
