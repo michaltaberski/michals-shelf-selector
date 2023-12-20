@@ -1,14 +1,14 @@
 import { Point, Polygon } from ".";
 
-export type NewShelfSvgOverlayProps = {
+export type PolygonsOverlayProps = {
   canvasSize: Point;
   polygons: Polygon[];
 };
 
-export const NewShelfSvgOverlay = ({
+export const PolygonsOverlay = ({
   canvasSize,
   polygons,
-}: NewShelfSvgOverlayProps) => {
+}: PolygonsOverlayProps) => {
   // useMemo to avoid recalculating derived state on every render
 
   return (

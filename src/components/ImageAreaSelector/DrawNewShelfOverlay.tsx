@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { MouseDrawState, useMouseDraw } from "./useMouseDraw";
-import { NewShelfSvgOverlay } from "./NewShelfSvgOverlay";
+import { PolygonsOverlay } from "./PolygonsOverlay";
 import { rectangleToPolygon } from "./utils";
 import { Polygon } from "./types";
 
@@ -42,7 +42,7 @@ export const DrawNewShelfOverlay = ({
       onMouseDown={onMouseDown}
       className="absolute top-0 left-0 w-full h-full"
     >
-      <NewShelfSvgOverlay
+      <PolygonsOverlay
         canvasSize={mouseDrawState.canvasSize}
         polygons={[polygon]}
       />
