@@ -1,14 +1,20 @@
 import { LayoutContainer } from "./components/LayoutContainer";
 import { LayoutBox } from "./components/LayoutBox";
-import { ImageAreaSelector, Polygon } from "./components/ImageAreaSelector";
+import { ImageAreaSelector } from "./components/ImageAreaSelector";
 import { LayoutFooter } from "./components/LayoutFooter";
-import { useRichState } from "./utils";
+import { cn, useRichState } from "./utils";
 import { COLORS } from "./const";
+import { Trash2 } from "lucide-react";
+import { Polygon } from "./types";
 
 const App = () => {
   const { state, updateState, resetState } = useRichState<{
+    selectedPolygonIndex: number | null;
     polygons: Polygon[];
-  }>({ polygons: [] });
+  }>({
+    selectedPolygonIndex: null,
+    polygons: [],
+  });
 
   return (
     <>
@@ -31,27 +37,58 @@ const App = () => {
               Select item on the picture
             </div>
           ) : (
-            <ul className="flex flex-col gap-4">
-              {state.polygons.map((polygon, index) => (
-                <li key={index} className="flex items-center gap-2">
-                  <div
-                    className="w-4 h-4 rounded"
-                    style={{
-                      backgroundColor: `#${COLORS[index % COLORS.length]}`,
-                    }}
-                  />
-                  <div className="text-sm text-slate-700">
-                    Item #{index + 1}
-                  </div>
-                </li>
-              ))}
+            <ul className="flex flex-col gap-2">
+              {state.polygons.map((_polygon, index) => {
+                const isSelected = index === state.selectedPolygonIndex;
+                return (
+                  <li
+                    key={index}
+                    className={cn(
+                      "flex items-center gap-2 hover:bg-slate-50 rounded p-2 border border-transparent hover:border-slate-300",
+                      isSelected &&
+                        `border-rose-500 hover:border-rose-500 bg-rose-50 hover:bg-rose-100 text-rose-700`
+                    )}
+                    onClick={() =>
+                      updateState({
+                        selectedPolygonIndex: isSelected ? null : index,
+                      })
+                    }
+                  >
+                    <div
+                      className="w-6 h-6 rounded shrink-0"
+                      style={{
+                        backgroundColor: `#${COLORS[index % COLORS.length]}`,
+                      }}
+                    />
+                    <div className="text-sm w-full">Item #{index + 1}</div>
+                    <button
+                      className={cn(
+                        "hover:scale-125 transition-transform ease-in-out",
+                        !isSelected && "text-slate-400 hover:text-slate-600"
+                      )}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (confirm("Are you sure?") === false) return;
+                        updateState({
+                          selectedPolygonIndex: null,
+                          polygons: state.polygons.filter(
+                            (_, i) => i !== index
+                          ),
+                        });
+                      }}
+                    >
+                      <Trash2 width={20} height={20} />
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           )}
           <div className="pt-4 mt-4 border-t">
             <button
               disabled={state.polygons.length === 0}
               className="p-2 rounded text-white w-full text-sm bg-rose-500 hover:bg-rose-600 active:bg-rose-700 disabled:bg-rose-200"
-              onClick={() => resetState()}
+              onClick={() => confirm("Are you sure?") && resetState()}
             >
               Reset
             </button>
