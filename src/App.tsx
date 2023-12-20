@@ -33,8 +33,8 @@ const App = () => {
         </LayoutBox>
         <LayoutBox className="w-1/4 min-w-64">
           {state.polygons.length === 0 ? (
-            <div className="p-4 text-center text-slate-700">
-              Select item on the picture
+            <div className="py-2 text-center text-slate-400">
+              Select stock on the picture
             </div>
           ) : (
             <ul className="flex flex-col gap-2">
@@ -44,7 +44,7 @@ const App = () => {
                   <li
                     key={index}
                     className={cn(
-                      "flex items-center gap-2 hover:bg-slate-50 rounded p-2 border border-transparent hover:border-slate-300",
+                      "group flex items-center gap-2 hover:bg-slate-50 rounded p-2 border border-transparent hover:border-slate-300 cursor-pointer",
                       isSelected &&
                         `border-rose-500 hover:border-rose-500 bg-rose-50 hover:bg-rose-100 text-rose-700`
                     )}
@@ -64,11 +64,11 @@ const App = () => {
                     <button
                       className={cn(
                         "hover:scale-125 transition-transform ease-in-out",
-                        !isSelected && "text-slate-400 hover:text-slate-600"
+                        !isSelected &&
+                          "text-transparent group-hover:text-slate-400 hover:text-slate-600"
                       )}
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (confirm("Are you sure?") === false) return;
                         updateState({
                           selectedPolygonIndex: null,
                           polygons: state.polygons.filter(
