@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from "react";
 import { MouseDrawState, useMouseDraw } from "./useMouseDraw";
 import { PolygonsOverlay } from "./PolygonsOverlay";
-import { rectangleToPolygon } from "./utils";
 import { Polygon } from "../../types";
 import { MIN_SHELF_SIZE } from "../../const";
+import { rectangleToPolygon } from "../../utils";
 
 export type DrawNewShelfOverlayProps = {
   onDrawEnd: (polygon: Polygon) => void;
