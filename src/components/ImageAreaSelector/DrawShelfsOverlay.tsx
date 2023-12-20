@@ -1,7 +1,7 @@
 import React from "react";
 import { PolygonsOverlay } from "./PolygonsOverlay";
-import { Polygon } from "./types";
-import { useResizeObserver } from "./useResizeObserver";
+import { Polygon } from "../../types";
+import { useResizeObserver } from "../../utils";
 
 export type DrawShelfsOverlayProps = {
   polygons: Polygon[];

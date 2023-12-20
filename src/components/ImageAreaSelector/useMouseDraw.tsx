@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRichState } from "../../utils";
-import { Point, Rectangle } from "./types";
+import { Point, Rectangle } from "../../types";
 import { substractOffset } from "./utils";
 import clamp from "lodash/clamp";
 
