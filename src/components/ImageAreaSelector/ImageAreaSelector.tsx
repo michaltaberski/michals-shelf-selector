@@ -1,14 +1,15 @@
 import { useRef } from "react";
 import { Polygon } from "../../types";
-import { DrawNewShelfOverlay } from "./DrawNewShelfOverlay2";
+import { ShelfPictureOverlay } from "./ShelfPictureOverlay";
 import { useResizeObserver } from "../../utils";
 import { PolygonsOverlay } from "./PolygonsOverlay";
+import { SELECTION_COLOR } from "../../const";
 
 export type ImageAreaSelectorProps = {
   imageUrl: string;
   polygons: Polygon[];
   onPoligonClick: (index: number) => void;
-  onNewShelfDrawn: (shelf: Polygon) => void;
+  onNewPolygonDrawn: (shelf: Polygon) => void;
   selectedPolygonIndex?: number;
 };
 
@@ -17,7 +18,7 @@ export const ImageAreaSelector = ({
   polygons,
   selectedPolygonIndex,
   onPoligonClick,
-  onNewShelfDrawn,
+  onNewPolygonDrawn,
 }: ImageAreaSelectorProps) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const canvasSize = useResizeObserver(overlayRef);
@@ -25,21 +26,28 @@ export const ImageAreaSelector = ({
   return (
     // Enforced normalization image width to 640px, so I don't have to play with
     // scaling overlay on resize.
-    <div ref={overlayRef} className="relative w-[640px] min-w-[640px]">
-      {/*
-        Why 2 overlays?
-        To avoid fat component with too many responsibilities.
-      */}
-      <DrawNewShelfOverlay onDrawEnd={onNewShelfDrawn}>
+    <div
+      ref={overlayRef}
+      className="relative w-[640px] min-w-[640px] select-none"
+    >
+      <ShelfPictureOverlay onDrawEnd={onNewPolygonDrawn}>
+        {/* Render existing polygons (except the selected one) */}
         <PolygonsOverlay
-          className="absolute top-0 left-0 w-full h-full"
           canvasSize={canvasSize}
           polygons={polygons}
           skipRenderIndex={selectedPolygonIndex}
           onPoligonClick={onPoligonClick}
         />
-      </DrawNewShelfOverlay>
-
+        {/* Render only the selected polygon */}
+        {selectedPolygonIndex !== undefined && (
+          <PolygonsOverlay
+            canvasSize={canvasSize}
+            polygons={[polygons[selectedPolygonIndex]]}
+            polygonColor={SELECTION_COLOR}
+            onPoligonClick={() => onPoligonClick?.(selectedPolygonIndex)}
+          />
+        )}
+      </ShelfPictureOverlay>
       <img src={imageUrl} className="w-full" />
     </div>
   );

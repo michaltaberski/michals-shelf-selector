@@ -27,9 +27,12 @@ const App = () => {
             polygons={state.polygons}
             selectedPolygonIndex={state.selectedPolygonIndex ?? undefined}
             onPoligonClick={(index) => {
-              console.log("onPoligonClick", index);
+              // Toggle selection on click
+              const selectedPolygonIndex =
+                state.selectedPolygonIndex === index ? null : index;
+              updateState({ selectedPolygonIndex });
             }}
-            onNewShelfDrawn={(shelf) => {
+            onNewPolygonDrawn={(shelf) => {
               updateState({ polygons: [...state.polygons, shelf] });
             }}
           />

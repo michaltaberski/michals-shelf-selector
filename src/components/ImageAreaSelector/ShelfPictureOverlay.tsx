@@ -2,18 +2,18 @@ import React, { useCallback, useMemo } from "react";
 import { MouseDrawState, useMouseDraw } from "./useMouseDraw";
 import { PolygonsOverlay } from "./PolygonsOverlay";
 import { Polygon } from "../../types";
-import { MIN_SHELF_SIZE, SELECTION_COLOR } from "../../const";
+import { MIN_SHELF_SIZE, NEW_SELECTION_COLOR } from "../../const";
 import { rectangleToPolygon } from "../../utils";
 
-export type DrawNewShelfOverlayProps = {
+export type ShelfPictureOverlayProps = {
   onDrawEnd: (polygon: Polygon) => void;
   children?: React.ReactNode;
 };
 
-export const DrawNewShelfOverlay = ({
+export const ShelfPictureOverlay = ({
   onDrawEnd,
   children,
-}: DrawNewShelfOverlayProps) => {
+}: ShelfPictureOverlayProps) => {
   const overlayRef = React.useRef<HTMLDivElement>(null);
 
   const handleDrawEnd = useCallback(
@@ -46,7 +46,7 @@ export const DrawNewShelfOverlay = ({
       {mouseDrawState.isDrawing && (
         <PolygonsOverlay
           canvasSize={mouseDrawState.canvasSize}
-          polygonColor={SELECTION_COLOR}
+          polygonColor={NEW_SELECTION_COLOR}
           polygons={[polygon]}
         />
       )}

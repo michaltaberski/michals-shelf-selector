@@ -10,4 +10,5 @@ export const COLORS = [
   "FFC008",
 ];
 
-export const SELECTION_COLOR = "F43F5F"; // tailwind rose-500
+export const NEW_SELECTION_COLOR = "F43F5F"; // tailwind rose-500
+export const SELECTION_COLOR = "FFFFFF"; // white

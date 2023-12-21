@@ -1,6 +1,6 @@
 import { COLORS } from "../../const";
 import { Point, Polygon } from "../../types";
-import { hexToRgba } from "../../utils";
+import { cn, hexToRgba } from "../../utils";
 
 export type PolygonsOverlayProps = {
   canvasSize: Point;
@@ -23,7 +23,10 @@ export const PolygonsOverlay = ({
 
   return (
     <svg
-      className={className}
+      className={cn(
+        "absolute top-0 left-0 w-full h-full pointer-events-none",
+        className
+      )}
       width={canvasSize[0]}
       height={canvasSize[1]}
       xmlns="http://www.w3.org/2000/svg"
@@ -35,6 +38,7 @@ export const PolygonsOverlay = ({
         return (
           <polygon
             key={pointsStr}
+            className="pointer-events-auto cursor-pointer"
             points={pointsStr}
             fill={hexToRgba(color, 0.7)}
             stroke={`#${color}`}
