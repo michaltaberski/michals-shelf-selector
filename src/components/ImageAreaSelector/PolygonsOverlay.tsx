@@ -8,10 +8,12 @@ export type PolygonsOverlayProps = {
   polygonColor?: string;
   skipRenderIndex?: number;
   onPoligonClick?: (index: number) => void;
+  className?: string;
 };
 
 export const PolygonsOverlay = ({
   canvasSize,
+  className,
   polygons,
   polygonColor,
   skipRenderIndex,
@@ -21,6 +23,7 @@ export const PolygonsOverlay = ({
 
   return (
     <svg
+      className={className}
       width={canvasSize[0]}
       height={canvasSize[1]}
       xmlns="http://www.w3.org/2000/svg"
