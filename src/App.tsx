@@ -2,10 +2,9 @@ import { LayoutContainer } from "./components/LayoutContainer";
 import { LayoutBox } from "./components/LayoutBox";
 import { ImageAreaSelector } from "./components/ImageAreaSelector";
 import { LayoutFooter } from "./components/LayoutFooter";
-import { cn, useRichState } from "./utils";
-import { COLORS } from "./const";
-import { Trash2 } from "lucide-react";
+import { useRichState } from "./utils";
 import { Polygon } from "./types";
+import { StockListItem } from "./components/StockListItem";
 
 const App = () => {
   const { state, updateState, resetState } = useRichState<{
@@ -41,45 +40,22 @@ const App = () => {
               {state.polygons.map((_polygon, index) => {
                 const isSelected = index === state.selectedPolygonIndex;
                 return (
-                  <li
+                  <StockListItem
                     key={index}
-                    className={cn(
-                      "group flex items-center gap-2 hover:bg-slate-50 rounded p-2 border border-transparent hover:border-slate-300 cursor-pointer",
-                      isSelected &&
-                        `border-rose-500 hover:border-rose-500 bg-rose-50 hover:bg-rose-100 text-rose-700`
-                    )}
+                    index={index}
+                    isSelected={isSelected}
                     onClick={() =>
                       updateState({
                         selectedPolygonIndex: isSelected ? null : index,
                       })
                     }
-                  >
-                    <div
-                      className="w-6 h-6 rounded shrink-0"
-                      style={{
-                        backgroundColor: `#${COLORS[index % COLORS.length]}`,
-                      }}
-                    />
-                    <div className="text-sm w-full">Item #{index + 1}</div>
-                    <button
-                      className={cn(
-                        "hover:scale-125 transition-transform ease-in-out",
-                        !isSelected &&
-                          "text-transparent group-hover:text-slate-400 hover:text-slate-600"
-                      )}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        updateState({
-                          selectedPolygonIndex: null,
-                          polygons: state.polygons.filter(
-                            (_, i) => i !== index
-                          ),
-                        });
-                      }}
-                    >
-                      <Trash2 width={20} height={20} />
-                    </button>
-                  </li>
+                    onDeleteClick={() => {
+                      updateState({
+                        selectedPolygonIndex: null,
+                        polygons: state.polygons.filter((_, i) => i !== index),
+                      });
+                    }}
+                  />
                 );
               })}
             </ul>
