@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Polygon } from "../../types";
-import { DrawNewShelfOverlay } from "./DrawNewShelfOverlay";
+import { DrawNewShelfOverlay } from "./DrawNewShelfOverlay2";
 import { useResizeObserver } from "../../utils";
 import { PolygonsOverlay } from "./PolygonsOverlay";
 
@@ -30,15 +30,16 @@ export const ImageAreaSelector = ({
         Why 2 overlays?
         To avoid fat component with too many responsibilities.
       */}
-      <PolygonsOverlay
-        className="absolute top-0 left-0 w-full h-full"
-        canvasSize={canvasSize}
-        polygons={polygons}
-        skipRenderIndex={selectedPolygonIndex}
-        onPoligonClick={onPoligonClick}
-      />
+      <DrawNewShelfOverlay onDrawEnd={onNewShelfDrawn}>
+        <PolygonsOverlay
+          className="absolute top-0 left-0 w-full h-full"
+          canvasSize={canvasSize}
+          polygons={polygons}
+          skipRenderIndex={selectedPolygonIndex}
+          onPoligonClick={onPoligonClick}
+        />
+      </DrawNewShelfOverlay>
 
-      <DrawNewShelfOverlay onDrawEnd={onNewShelfDrawn} />
       <img src={imageUrl} className="w-full" />
     </div>
   );
