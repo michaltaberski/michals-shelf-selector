@@ -5,12 +5,16 @@ import { DrawShelfsOverlay } from "./DrawShelfsOverlay";
 export type ImageAreaSelectorProps = {
   imageUrl: string;
   polygons: Polygon[];
+  onPoligonClick: (index: number) => void;
   onNewShelfDrawn: (shelf: Polygon) => void;
+  selectedPolygonIndex?: number;
 };
 
 export const ImageAreaSelector = ({
   imageUrl,
   polygons,
+  selectedPolygonIndex,
+  onPoligonClick,
   onNewShelfDrawn,
 }: ImageAreaSelectorProps) => {
   return (
@@ -21,7 +25,11 @@ export const ImageAreaSelector = ({
         Why 2 overlays?
         To avoid fat component with too many responsibilities.
       */}
-      <DrawShelfsOverlay polygons={polygons} />
+      <DrawShelfsOverlay
+        polygons={polygons}
+        skipRenderIndex={selectedPolygonIndex}
+        onPoligonClick={onPoligonClick}
+      />
       <DrawNewShelfOverlay onDrawEnd={onNewShelfDrawn} />
       <img src={imageUrl} className="w-full" />
     </div>

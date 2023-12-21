@@ -25,6 +25,10 @@ const App = () => {
           <ImageAreaSelector
             imageUrl="/images/shelf-1.avif"
             polygons={state.polygons}
+            selectedPolygonIndex={state.selectedPolygonIndex ?? undefined}
+            onPoligonClick={(index) => {
+              console.log("onPoligonClick", index);
+            }}
             onNewShelfDrawn={(shelf) => {
               updateState({ polygons: [...state.polygons, shelf] });
             }}
