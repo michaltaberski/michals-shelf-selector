@@ -1,5 +1,4 @@
 import { Point } from "../../types";
-import { useRef } from "react";
 import { useMouseDraw } from "./useMouseDraw";
 
 export type EditPolygonHandleProps = {
@@ -19,8 +18,6 @@ export const EditPolygonHandle = ({
   onPointMove,
   overlayRef,
 }: EditPolygonHandleProps) => {
-  const handleRef = useRef<HTMLDivElement>(null);
-
   const { onMouseDown } = useMouseDraw({
     overlayRef,
     canvasSize,
@@ -30,7 +27,6 @@ export const EditPolygonHandle = ({
 
   return (
     <div
-      ref={handleRef}
       onMouseDown={onMouseDown}
       className="absolute w-4 h-4 bg-white border-4 rounded-full -translate-x-2 -translate-y-2 z-10"
       style={{

@@ -9,7 +9,7 @@ import { EditPolygonOverlay } from "./EditPolygonOverlay";
 export type ImageAreaSelectorProps = {
   imageUrl: string;
   polygons: Polygon[];
-  onPoligonClick: (index: number) => void;
+  onPoligonSelect: (index: number | null) => void;
   onNewPolygonDrawn: (shelf: Polygon) => void;
   onPolygonEditEnd: (index: number, polygon: Polygon) => void;
   selectedPolygonIndex?: number;
@@ -20,7 +20,7 @@ export const ImageAreaSelector = ({
   polygons,
   selectedPolygonIndex,
   onPolygonEditEnd,
-  onPoligonClick,
+  onPoligonSelect,
   onNewPolygonDrawn,
 }: ImageAreaSelectorProps) => {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ export const ImageAreaSelector = ({
           canvasSize={canvasSize}
           polygons={polygons}
           skipRenderIndex={selectedPolygonIndex}
-          onPoligonClick={onPoligonClick}
+          onPoligonSelect={onPoligonSelect}
         />
         {/* Render only the selected polygon */}
         {selectedPolygonIndex !== undefined && (
@@ -52,7 +52,9 @@ export const ImageAreaSelector = ({
             canvasSize={canvasSize}
             color={COLORS[selectedPolygonIndex]}
             polygon={polygons[selectedPolygonIndex]}
-            onPoligonClick={() => onPoligonClick?.(selectedPolygonIndex)}
+            // onPoligonClick={() => {
+            //   onPoligonSelect?.(selectedPolygonIndex);
+            // }}
             onEditEnd={(polygon) => {
               onPolygonEditEnd(selectedPolygonIndex, polygon);
             }}

@@ -10,7 +10,6 @@ export type EditPolygonOverlayProps = {
   polygon: Polygon;
   color: string;
   onEditEnd: (polygon: Polygon) => void;
-  onPoligonClick: () => void;
   overlayRef: React.RefObject<HTMLDivElement>;
 };
 
@@ -19,7 +18,6 @@ export const EditPolygonOverlay = ({
   polygon,
   color,
   onEditEnd,
-  onPoligonClick,
   overlayRef,
 }: EditPolygonOverlayProps) => {
   const [currentPolygon, setCurrentPolygon] = useState<Polygon>(polygon);
@@ -48,7 +46,6 @@ export const EditPolygonOverlay = ({
         canvasSize={canvasSize}
         polygons={[currentPolygon]}
         polygonColor={SELECTION_COLOR}
-        onPoligonClick={onPoligonClick}
       />
     </>
   );

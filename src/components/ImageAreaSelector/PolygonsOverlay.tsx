@@ -7,7 +7,7 @@ export type PolygonsOverlayProps = {
   polygons: Polygon[];
   polygonColor?: string;
   skipRenderIndex?: number;
-  onPoligonClick?: (index: number) => void;
+  onPoligonSelect?: (index: number) => void;
   className?: string;
 };
 
@@ -17,7 +17,7 @@ export const PolygonsOverlay = ({
   polygons,
   polygonColor,
   skipRenderIndex,
-  onPoligonClick,
+  onPoligonSelect,
 }: PolygonsOverlayProps) => {
   // useMemo to avoid recalculating derived state on every render
 
@@ -44,7 +44,7 @@ export const PolygonsOverlay = ({
             stroke={`#${color}`}
             strokeWidth="2"
             strokeDasharray="5,5"
-            onClick={() => onPoligonClick?.(i)}
+            onClick={() => onPoligonSelect?.(i)}
           />
         );
       })}

@@ -33,7 +33,7 @@ const App = () => {
                 selectedPolygonIndex: null,
               });
             }}
-            onPoligonClick={(index) => {
+            onPoligonSelect={(index) => {
               // Toggle selection on click
               const selectedPolygonIndex =
                 state.selectedPolygonIndex === index ? null : index;
