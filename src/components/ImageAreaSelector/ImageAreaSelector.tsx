@@ -3,7 +3,7 @@ import { Polygon } from "../../types";
 import { ShelfPictureOverlay } from "./ShelfPictureOverlay";
 import { useResizeObserver } from "../../utils";
 import { PolygonsOverlay } from "./PolygonsOverlay";
-import { COLORS } from "../../const";
+import { BASE_IMAGE_SIZE, COLORS } from "../../const";
 import { EditPolygonOverlay } from "./EditPolygonOverlay";
 
 export type ImageAreaSelectorProps = {
@@ -27,11 +27,12 @@ export const ImageAreaSelector = ({
   const canvasSize = useResizeObserver(overlayRef);
 
   return (
-    // Enforced normalization image width to 640px, so I don't have to play with
-    // scaling overlay on resize.
     <div
       ref={overlayRef}
-      className="relative w-[640px] min-w-[640px] select-none"
+      className="relative select-none"
+      // Enforced normalization image width to 640px, so I don't have to play with
+      // scaling overlay on resize.
+      style={{ width: BASE_IMAGE_SIZE, minWidth: BASE_IMAGE_SIZE }}
     >
       <ShelfPictureOverlay
         overlayRef={overlayRef}
@@ -59,6 +60,7 @@ export const ImageAreaSelector = ({
             onEditEnd={(polygon) => {
               onPolygonEditEnd(selectedPolygonIndex, polygon);
             }}
+            imageUrl={imageUrl}
           />
         )}
       </ShelfPictureOverlay>

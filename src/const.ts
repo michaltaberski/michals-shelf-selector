@@ -1,5 +1,6 @@
 // Shelf with width or height less than this value will be ignored
 export const MIN_SHELF_SIZE = 10;
+export const BASE_IMAGE_SIZE = 640;
 
 export const COLORS = [
   "9C27B0",
