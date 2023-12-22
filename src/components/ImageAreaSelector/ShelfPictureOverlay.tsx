@@ -10,6 +10,7 @@ export type ShelfPictureOverlayProps = {
   overlayRef: React.RefObject<HTMLDivElement>;
   onDrawEnd: (polygon: Polygon) => void;
   children?: React.ReactNode;
+  isNewPolygonDrawingEnabled?: boolean;
 };
 
 export const ShelfPictureOverlay = ({
@@ -17,6 +18,7 @@ export const ShelfPictureOverlay = ({
   onDrawEnd,
   children,
   overlayRef,
+  isNewPolygonDrawingEnabled,
 }: ShelfPictureOverlayProps) => {
   const handleDrawEnd = useCallback(
     ({ startPoint, endPoint }: MouseDrawState) => {
@@ -42,7 +44,7 @@ export const ShelfPictureOverlay = ({
 
   return (
     <div
-      onMouseDown={onMouseDown}
+      onMouseDown={isNewPolygonDrawingEnabled ? onMouseDown : undefined}
       className="absolute top-0 left-0 w-full h-full"
     >
       {mouseDrawState.isDrawing && (

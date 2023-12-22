@@ -37,6 +37,7 @@ export const ImageAreaSelector = ({
         overlayRef={overlayRef}
         canvasSize={canvasSize}
         onDrawEnd={onNewPolygonDrawn}
+        isNewPolygonDrawingEnabled={selectedPolygonIndex === undefined}
       >
         {/* Render existing polygons (except the selected one) */}
         <PolygonsOverlay
