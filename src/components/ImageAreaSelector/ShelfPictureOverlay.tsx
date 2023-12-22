@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo } from "react";
 import { MouseDrawState, useMouseDraw } from "./useMouseDraw";
 import { PolygonsOverlay } from "./PolygonsOverlay";
 import { Point, Polygon } from "../../types";
@@ -7,6 +7,7 @@ import { rectangleToPolygon } from "../../utils";
 
 export type ShelfPictureOverlayProps = {
   canvasSize: Point;
+  overlayRef: React.RefObject<HTMLDivElement>;
   onDrawEnd: (polygon: Polygon) => void;
   children?: React.ReactNode;
 };
@@ -15,9 +16,8 @@ export const ShelfPictureOverlay = ({
   canvasSize,
   onDrawEnd,
   children,
+  overlayRef,
 }: ShelfPictureOverlayProps) => {
-  const overlayRef = useRef<HTMLDivElement>(null);
-
   const handleDrawEnd = useCallback(
     ({ startPoint, endPoint }: MouseDrawState) => {
       const rectWidth = Math.abs(endPoint[0] - startPoint[0]);
@@ -29,11 +29,11 @@ export const ShelfPictureOverlay = ({
     [onDrawEnd]
   );
 
-  const { onMouseDown, mouseDrawState } = useMouseDraw(
+  const { onMouseDown, mouseDrawState } = useMouseDraw({
     overlayRef,
     canvasSize,
-    handleDrawEnd
-  );
+    onDrawEnd: handleDrawEnd,
+  });
 
   const polygon = useMemo(
     () => rectangleToPolygon(mouseDrawState),
@@ -42,7 +42,6 @@ export const ShelfPictureOverlay = ({
 
   return (
     <div
-      ref={overlayRef}
       onMouseDown={onMouseDown}
       className="absolute top-0 left-0 w-full h-full"
     >

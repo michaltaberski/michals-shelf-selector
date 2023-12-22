@@ -20,18 +20,24 @@ const defaultState: MouseDrawState = {
   endPoint: [0, 0],
 };
 
-export const useMouseDraw = (
-  overlayRef: React.RefObject<HTMLDivElement>,
-  canvasSize: Point,
-  onDrawEnd: (state: MouseDrawState) => void
-) => {
+export const useMouseDraw = ({
+  overlayRef,
+  canvasSize,
+  onDraw,
+  onDrawEnd,
+}: {
+  overlayRef: React.RefObject<HTMLDivElement>;
+  canvasSize: Point;
+  onDraw?: (state: MouseDrawState) => void;
+  onDrawEnd?: (state: MouseDrawState) => void;
+}) => {
   const { state, updateState, resetState } =
     useRichState<MouseDrawState>(defaultState);
 
   useEffect(() => {
     // Event handlers
     const handleMouseUp = () => {
-      onDrawEnd(state);
+      onDrawEnd?.(state);
       resetState();
     };
 
@@ -48,13 +54,16 @@ export const useMouseDraw = (
         state.offsetPoint
       );
 
-      updateState({
-        endPoint: [
-          // clamp to canvas size (so the end point is within the canvas bounds)
-          clamp(endPointBeforeValidation[0], 0, canvasSize[0]),
-          clamp(endPointBeforeValidation[1], 0, canvasSize[1]),
-        ],
-      });
+      updateState(
+        {
+          endPoint: [
+            // clamp to canvas size (so the end point is within the canvas bounds)
+            clamp(endPointBeforeValidation[0], 0, canvasSize[0]),
+            clamp(endPointBeforeValidation[1], 0, canvasSize[1]),
+          ],
+        },
+        onDraw
+      );
     };
 
     // Subscribe

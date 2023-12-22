@@ -10,12 +10,19 @@ export const cn = twMerge;
 export const useRichState = <T extends object>(initialState: T) => {
   const [state, setState] = React.useState<T>(initialState);
 
-  const updateState = (newState: Partial<T>) => {
-    setState((prevState) => ({ ...prevState, ...newState }));
+  const updateState = (newState: Partial<T>, cb?: (state: T) => void) => {
+    setState((prevState) => {
+      const nextState = { ...prevState, ...newState };
+      cb?.(nextState);
+      return nextState;
+    });
   };
 
-  const resetState = (newState: Partial<T> = {}) =>
-    setState({ ...initialState, ...newState });
+  const resetState = (newState: Partial<T> = {}, cb?: (state: T) => void) => {
+    const nextState = { ...initialState, ...newState };
+    setState(nextState);
+    cb?.(nextState);
+  };
 
   return { state, updateState, resetState };
 };

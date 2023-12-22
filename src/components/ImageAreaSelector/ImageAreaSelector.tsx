@@ -32,6 +32,7 @@ export const ImageAreaSelector = ({
       className="relative w-[640px] min-w-[640px] select-none"
     >
       <ShelfPictureOverlay
+        overlayRef={overlayRef}
         canvasSize={canvasSize}
         onDrawEnd={onNewPolygonDrawn}
       >
@@ -45,6 +46,7 @@ export const ImageAreaSelector = ({
         {/* Render only the selected polygon */}
         {selectedPolygonIndex !== undefined && (
           <EditPolygonOverlay
+            overlayRef={overlayRef}
             canvasSize={canvasSize}
             color={COLORS[selectedPolygonIndex]}
             polygon={polygons[selectedPolygonIndex]}
