@@ -1,24 +1,30 @@
 import { Point } from "../../types";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useMouseDraw } from "./useMouseDraw";
 
 export type EditPolygonHandleProps = {
   color: string;
   point: Point;
+  canvasSize: Point;
   onPointMove: (point: Point) => void;
 };
 
 export const EditPolygonHandle = ({
   color,
   point,
+  canvasSize,
   onPointMove,
 }: EditPolygonHandleProps) => {
   const handleRef = useRef<HTMLDivElement>(null);
-  const { onMouseDown, mouseDrawState } = useMouseDraw(handleRef, (x) => {
-    console.log("onDrawEnd", x);
-  });
+  const { onMouseDown, mouseDrawState } = useMouseDraw(
+    handleRef,
+    canvasSize,
+    (x) => {
+      console.log("onDrawEnd", x);
+    }
+  );
 
-  console.log("mouseDrawState", mouseDrawState);
+  console.log("mouseDrawState", mouseDrawState.endPoint[0]);
   return (
     <div
       ref={handleRef}

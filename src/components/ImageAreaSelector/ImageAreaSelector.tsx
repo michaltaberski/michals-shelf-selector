@@ -31,7 +31,10 @@ export const ImageAreaSelector = ({
       ref={overlayRef}
       className="relative w-[640px] min-w-[640px] select-none"
     >
-      <ShelfPictureOverlay onDrawEnd={onNewPolygonDrawn}>
+      <ShelfPictureOverlay
+        canvasSize={canvasSize}
+        onDrawEnd={onNewPolygonDrawn}
+      >
         {/* Render existing polygons (except the selected one) */}
         <PolygonsOverlay
           canvasSize={canvasSize}

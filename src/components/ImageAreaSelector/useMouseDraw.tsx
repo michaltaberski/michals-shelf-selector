@@ -11,8 +11,6 @@ export type MouseDrawState = Rectangle & {
   isDrawing: boolean;
   // offset is the position of the top left corner of the overlay relative to the viewport
   offsetPoint: Point;
-  // the max [x, y] values of the canvas, or [width, height] (its the same)
-  canvasSize: Point;
 };
 
 const defaultState: MouseDrawState = {
@@ -20,11 +18,11 @@ const defaultState: MouseDrawState = {
   offsetPoint: [0, 0],
   startPoint: [0, 0],
   endPoint: [0, 0],
-  canvasSize: [0, 0],
 };
 
 export const useMouseDraw = (
   overlayRef: React.RefObject<HTMLDivElement>,
+  canvasSize: Point,
   onDrawEnd: (state: MouseDrawState) => void
 ) => {
   const { state, updateState, resetState } =
@@ -49,11 +47,12 @@ export const useMouseDraw = (
         [e.clientX, e.clientY],
         state.offsetPoint
       );
+
       updateState({
         endPoint: [
           // clamp to canvas size (so the end point is within the canvas bounds)
-          clamp(endPointBeforeValidation[0], 0, state.canvasSize[0]),
-          clamp(endPointBeforeValidation[1], 0, state.canvasSize[1]),
+          clamp(endPointBeforeValidation[0], 0, canvasSize[0]),
+          clamp(endPointBeforeValidation[1], 0, canvasSize[1]),
         ],
       });
     };
@@ -71,6 +70,8 @@ export const useMouseDraw = (
 
   return {
     onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+
       // return early if overlayRef is not set
       if (!overlayRef.current) return;
       const oferlayRect = overlayRef.current.getBoundingClientRect();
@@ -83,7 +84,6 @@ export const useMouseDraw = (
         startPoint,
         endPoint: startPoint,
         offsetPoint,
-        canvasSize: [oferlayRect.width, oferlayRect.height],
       });
     },
     mouseDrawState: state,

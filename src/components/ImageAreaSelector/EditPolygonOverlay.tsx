@@ -1,6 +1,7 @@
 import { Point, Polygon } from "../../types";
 import { PolygonsOverlay } from "./PolygonsOverlay";
 import { SELECTION_COLOR } from "../../const";
+import { EditPolygonHandle } from "./EditPolygonHandle";
 
 export type EditPolygonOverlayProps = {
   canvasSize: Point;
@@ -19,11 +20,15 @@ export const EditPolygonOverlay = ({
 }: EditPolygonOverlayProps) => {
   return (
     <>
-      {polygon.map(([x, y], index) => (
-        <div
+      {polygon.map((point, index) => (
+        <EditPolygonHandle
           key={index}
-          className="absolute w-4 h-4 bg-white border-4 rounded-full -translate-x-2 -translate-y-2 z-10"
-          style={{ borderColor: `#${color}`, left: x, top: y }}
+          color={color}
+          point={point}
+          canvasSize={canvasSize}
+          onPointMove={(point) => {
+            console.log("onPointMove", point);
+          }}
         />
       ))}
       <PolygonsOverlay
