@@ -5,6 +5,7 @@ import { LayoutFooter } from "./components/LayoutFooter";
 import { useRichState } from "./utils";
 import { Polygon } from "./types";
 import { StockListItem } from "./components/StockListItem";
+import { set } from "lodash";
 
 const App = () => {
   const { state, updateState, resetState } = useRichState<{
@@ -26,6 +27,12 @@ const App = () => {
             imageUrl="/images/shelf-1.avif"
             polygons={state.polygons}
             selectedPolygonIndex={state.selectedPolygonIndex ?? undefined}
+            onPolygonEditEnd={(index, polygon) => {
+              updateState({
+                polygons: set([...state.polygons], index, [...polygon]),
+                selectedPolygonIndex: null,
+              });
+            }}
             onPoligonClick={(index) => {
               // Toggle selection on click
               const selectedPolygonIndex =

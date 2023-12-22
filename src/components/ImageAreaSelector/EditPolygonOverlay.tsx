@@ -9,7 +9,7 @@ export type EditPolygonOverlayProps = {
   canvasSize: Point;
   polygon: Polygon;
   color: string;
-  onEditComplete: (polygon: Polygon) => void;
+  onEditEnd: (polygon: Polygon) => void;
   onPoligonClick: () => void;
   overlayRef: React.RefObject<HTMLDivElement>;
 };
@@ -18,7 +18,7 @@ export const EditPolygonOverlay = ({
   canvasSize,
   polygon,
   color,
-  onEditComplete,
+  onEditEnd,
   onPoligonClick,
   overlayRef,
 }: EditPolygonOverlayProps) => {
@@ -36,7 +36,7 @@ export const EditPolygonOverlay = ({
             // Only onPointMoveEnd we update the global state
             // so we don't re-render the whole tree on every
             // point move
-            onEditComplete(currentPolygon);
+            onEditEnd(currentPolygon);
           }}
           onPointMove={(point) => {
             // On every point move we only update the local state

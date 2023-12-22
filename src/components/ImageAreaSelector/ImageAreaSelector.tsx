@@ -11,6 +11,7 @@ export type ImageAreaSelectorProps = {
   polygons: Polygon[];
   onPoligonClick: (index: number) => void;
   onNewPolygonDrawn: (shelf: Polygon) => void;
+  onPolygonEditEnd: (index: number, polygon: Polygon) => void;
   selectedPolygonIndex?: number;
 };
 
@@ -18,6 +19,7 @@ export const ImageAreaSelector = ({
   imageUrl,
   polygons,
   selectedPolygonIndex,
+  onPolygonEditEnd,
   onPoligonClick,
   onNewPolygonDrawn,
 }: ImageAreaSelectorProps) => {
@@ -51,8 +53,8 @@ export const ImageAreaSelector = ({
             color={COLORS[selectedPolygonIndex]}
             polygon={polygons[selectedPolygonIndex]}
             onPoligonClick={() => onPoligonClick?.(selectedPolygonIndex)}
-            onEditComplete={(polygon) => {
-              console.log("onEditComplete", polygon);
+            onEditEnd={(polygon) => {
+              onPolygonEditEnd(selectedPolygonIndex, polygon);
             }}
           />
         )}
