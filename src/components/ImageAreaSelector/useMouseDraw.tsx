@@ -11,6 +11,7 @@ export type MouseDrawState = Rectangle & {
   isDrawing: boolean;
   // offset is the position of the top left corner of the overlay relative to the viewport
   offsetPoint: Point;
+  mouseViewportPosition: Point;
 };
 
 const defaultState: MouseDrawState = {
@@ -18,6 +19,7 @@ const defaultState: MouseDrawState = {
   offsetPoint: [0, 0],
   startPoint: [0, 0],
   endPoint: [0, 0],
+  mouseViewportPosition: [0, 0],
 };
 
 export const useMouseDraw = ({
@@ -61,6 +63,7 @@ export const useMouseDraw = ({
             clamp(endPointBeforeValidation[0], 0, canvasSize[0]),
             clamp(endPointBeforeValidation[1], 0, canvasSize[1]),
           ],
+          mouseViewportPosition: [e.clientX, e.clientY],
         },
         onDraw
       );

@@ -24,6 +24,8 @@ export const EditPolygonOverlay = ({
   imageUrl,
 }: EditPolygonOverlayProps) => {
   const [zoomCoordinates, setZoomCoordinates] = useState<Point | null>(null);
+  const [mouseViewportPosition, setMouseViewportPosition] =
+    useState<Point | null>(null);
   const [currentPolygon, setCurrentPolygon] = useState<Polygon>(polygon);
   return (
     <>
@@ -39,11 +41,13 @@ export const EditPolygonOverlay = ({
             // so we don't re-render the whole tree on every
             // point move
             setZoomCoordinates(null);
+            setMouseViewportPosition(null);
             onEditEnd(currentPolygon);
           }}
-          onPointMove={(point) => {
+          onPointMove={(point, mouseViewportPosition) => {
             // On every point move we only update the local state
             setZoomCoordinates(point);
+            setMouseViewportPosition(mouseViewportPosition);
             setCurrentPolygon(set([...currentPolygon], index, point));
           }}
         />
@@ -56,6 +60,7 @@ export const EditPolygonOverlay = ({
       {zoomCoordinates && (
         <EditPolygonZoom
           imageUrl={imageUrl}
+          mouseViewportPosition={mouseViewportPosition}
           zoomCoordinates={zoomCoordinates}
         />
       )}

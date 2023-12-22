@@ -5,7 +5,7 @@ export type EditPolygonHandleProps = {
   color: string;
   point: Point;
   canvasSize: Point;
-  onPointMove: (point: Point) => void;
+  onPointMove: (point: Point, mouseViewportPosition: Point) => void;
   onPointMoveEnd: (point: Point) => void;
   overlayRef: React.RefObject<HTMLDivElement>;
 };
@@ -22,7 +22,7 @@ export const EditPolygonHandle = ({
     overlayRef,
     canvasSize,
     onDrawEnd: (x) => onPointMoveEnd(x.endPoint),
-    onDraw: (x) => onPointMove(x.endPoint),
+    onDraw: (x) => onPointMove(x.endPoint, x.mouseViewportPosition),
   });
 
   return (
