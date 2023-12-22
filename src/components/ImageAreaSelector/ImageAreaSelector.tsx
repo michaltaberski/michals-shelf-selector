@@ -3,7 +3,7 @@ import { Polygon } from "../../types";
 import { ShelfPictureOverlay } from "./ShelfPictureOverlay";
 import { useResizeObserver } from "../../utils";
 import { PolygonsOverlay } from "./PolygonsOverlay";
-import { COLORS, SELECTION_COLOR } from "../../const";
+import { COLORS } from "../../const";
 import { EditPolygonOverlay } from "./EditPolygonOverlay";
 
 export type ImageAreaSelectorProps = {
