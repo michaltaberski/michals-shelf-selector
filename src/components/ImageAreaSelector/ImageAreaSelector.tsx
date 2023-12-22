@@ -3,7 +3,8 @@ import { Polygon } from "../../types";
 import { ShelfPictureOverlay } from "./ShelfPictureOverlay";
 import { useResizeObserver } from "../../utils";
 import { PolygonsOverlay } from "./PolygonsOverlay";
-import { SELECTION_COLOR } from "../../const";
+import { COLORS, SELECTION_COLOR } from "../../const";
+import { EditPolygonOverlay } from "./EditPolygonOverlay";
 
 export type ImageAreaSelectorProps = {
   imageUrl: string;
@@ -40,11 +41,14 @@ export const ImageAreaSelector = ({
         />
         {/* Render only the selected polygon */}
         {selectedPolygonIndex !== undefined && (
-          <PolygonsOverlay
+          <EditPolygonOverlay
             canvasSize={canvasSize}
-            polygons={[polygons[selectedPolygonIndex]]}
-            polygonColor={SELECTION_COLOR}
+            color={COLORS[selectedPolygonIndex]}
+            polygon={polygons[selectedPolygonIndex]}
             onPoligonClick={() => onPoligonClick?.(selectedPolygonIndex)}
+            onEditComplete={(polygon) => {
+              console.log("onEditComplete", polygon);
+            }}
           />
         )}
       </ShelfPictureOverlay>
