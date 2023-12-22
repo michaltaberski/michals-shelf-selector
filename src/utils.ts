@@ -11,11 +11,9 @@ export const useRichState = <T extends object>(initialState: T) => {
   const [state, setState] = React.useState<T>(initialState);
 
   const updateState = (newState: Partial<T>, cb?: (state: T) => void) => {
-    setState((prevState) => {
-      const nextState = { ...prevState, ...newState };
-      cb?.(nextState);
-      return nextState;
-    });
+    const nextState = { ...state, ...newState };
+    setState(nextState);
+    cb?.(nextState);
   };
 
   const resetState = (newState: Partial<T> = {}, cb?: (state: T) => void) => {
