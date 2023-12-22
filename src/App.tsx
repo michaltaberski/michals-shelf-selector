@@ -7,6 +7,8 @@ import { Polygon } from "./types";
 import { StockListItem } from "./components/StockListItem";
 import { set } from "lodash";
 
+// If you want to use the App as separated component, you can do so
+// by enhancing it with props polygons (aka shelfs) and onChange handler.
 const App = () => {
   const { state, updateState, resetState } = useRichState<{
     selectedPolygonIndex: number | null;

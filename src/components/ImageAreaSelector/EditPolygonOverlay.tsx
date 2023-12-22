@@ -57,7 +57,7 @@ export const EditPolygonOverlay = ({
         polygons={[currentPolygon]}
         polygonColor={SELECTION_COLOR}
       />
-      {zoomCoordinates && (
+      {zoomCoordinates && mouseViewportPosition && (
         <EditPolygonZoom
           imageUrl={imageUrl}
           mouseViewportPosition={mouseViewportPosition}
